@@ -136,6 +136,10 @@ enum Definitions {
     static let  NOTIFICATION_LED_OFF_MS = "ledOffMs"
     static let  NOTIFICATION_TICKER = "ticker"
     static let  NOTIFICATION_ALLOW_WHILE_IDLE = "allowWhileIdle"
+    
+    //Yuthanea@CodeClans
+    static let CHANNEL_METHOD_SUBSCRIBE_TO_TOPIC = "subscribeToTopic"
+    static let CHANNEL_METHOD_UNSUBSCRIBE_TO_TOPIC = "unsubscribeToTopic";
 
     static let  initialValues = [
         Definitions.NOTIFICATION_ID: 0,

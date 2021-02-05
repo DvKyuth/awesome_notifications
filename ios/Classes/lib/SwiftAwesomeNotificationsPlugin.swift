@@ -639,11 +639,40 @@ public class SwiftAwesomeNotificationsPlugin: NSObject, FlutterPlugin, UNUserNot
             case Definitions.CHANNEL_METHOD_LIST_ALL_SCHEDULES:
                 channelMethodListAllSchedules(call: call, result: result)
                 return
+                
+            case Definitions.CHANNEL_METHOD_SUBSCRIBE_TO_TOPIC:
+                channelMethodSubscribeToFCMTopi(call: call, result: result)
+                return
+                
+            case Definitions.CHANNEL_METHOD_UNSUBSCRIBE_TO_TOPIC:
+                channelMethodUnsubscribeToFCMTopi(call: call, result: result)
+                return
 
             default:
                 result(FlutterError.init(code: "methodNotFound", message: "method not found", details: call.method));
                 return
         }
+    }
+    
+    //Yuthanea@CodeClans
+    private func channelMethodSubscribeToFCMTopi(call: FlutterMethodCall, result: @escaping FlutterResult) {
+        
+        let topic:String = call.arguments as! String
+            
+        Messaging.messaging().subscribe(toTopic: topic)
+            
+        result(true)
+
+    }
+    
+    //Yuthanea@CodeClans
+    private func channelMethodUnsubscribeToFCMTopi(call: FlutterMethodCall, result: @escaping FlutterResult) {
+        
+        let topic:String = call.arguments as! String
+            
+        Messaging.messaging().unsubscribe(fromTopic: topic)
+            
+        result(true)
     }
     
     
