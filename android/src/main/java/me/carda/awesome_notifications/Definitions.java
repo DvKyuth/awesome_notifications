@@ -181,4 +181,8 @@ public interface Definitions {
         put(Definitions.NOTIFICATION_ALLOW_WHILE_IDLE, false);
         put(Definitions.NOTIFICATION_ONLY_ALERT_ONCE, false);
     }};
+
+    //Yuthanea@CodeClans
+    String CHANNEL_METHOD_SUBSCRIBE_TO_TOPIC = "subscribeToTopic";
+    String CHANNEL_METHOD_UNSUBSCRIBE_TO_TOPIC = "unsubscribeToTopic";
 }

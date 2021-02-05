@@ -6,12 +6,10 @@ import 'package:flutter/material.dart';
 
 import 'enumerators/notification_layout.dart';
 
-const BROADCAST_FCM_TOKEN =
-    'me.carda.awesome_notifications.services.firebase.TOKEN';
+const BROADCAST_FCM_TOKEN = 'me.carda.awesome_notifications.services.firebase.TOKEN';
 const EXTRA_BROADCAST_FCM_TOKEN = 'token';
 
-const BROADCAST_MESSAGE =
-    'me.carda.awesome_notifications.services.firebase.NOTIFICATION';
+const BROADCAST_MESSAGE = 'me.carda.awesome_notifications.services.firebase.NOTIFICATION';
 const EXTRA_BROADCAST_MESSAGE = 'notification';
 
 const INITIALIZE_DEFAULT_ICON = "defaultIcon";
@@ -78,12 +76,9 @@ const INVALID_LARGE_ICON_ERROR_CODE = 'INVALID_LARGE_ICON';
 const INVALID_BIG_PICTURE_ERROR_CODE = 'INVALID_BIG_PICTURE';
 const INVALID_SOUND_ERROR_CODE = 'INVALID_SOUND';
 const INVALID_LED_DETAILS_ERROR_CODE = 'INVALID_LED_DETAILS';
-const INVALID_LED_DETAILS_ERROR_MESSAGE =
-    'Must specify both ledOnMs and ledOffMs to configure the blink cycle on older versions of Android before Oreo';
-const INVALID_DRAWABLE_RESOURCE_ERROR_MESSAGE =
-    'The resource %s could not be found. Please make sure it has been added as a drawable resource to your Android head project.';
-const INVALID_RAW_RESOURCE_ERROR_MESSAGE =
-    'The resource %s could not be found. Please make sure it has been added as a raw resource to your Android head project.';
+const INVALID_LED_DETAILS_ERROR_MESSAGE = 'Must specify both ledOnMs and ledOffMs to configure the blink cycle on older versions of Android before Oreo';
+const INVALID_DRAWABLE_RESOURCE_ERROR_MESSAGE = 'The resource %s could not be found. Please make sure it has been added as a drawable resource to your Android head project.';
+const INVALID_RAW_RESOURCE_ERROR_MESSAGE = 'The resource %s could not be found. Please make sure it has been added as a raw resource to your Android head project.';
 
 const NOTIFICATION_SYSTEM_ID = 'id';
 const NOTIFICATION_ICON_RESOURCE_ID = 'iconResourceId';
@@ -166,6 +161,10 @@ const NOTIFICATION_LED_ON_MS = 'ledOnMs';
 const NOTIFICATION_LED_OFF_MS = 'ledOffMs';
 const NOTIFICATION_TICKER = 'ticker';
 const NOTIFICATION_ALLOW_WHILE_IDLE = 'allowWhileIdle';
+
+//Yuthanea@CodeClans
+const String CHANNEL_METHOD_SUBSCRIBE_TO_TOPIC = "subscribeToTopic";
+const String CHANNEL_METHOD_UNSUBSCRIBE_TO_TOPIC = "unsubscribeToTopic";
 
 class Definitions {
   static Map<String, Object> initialValues = {

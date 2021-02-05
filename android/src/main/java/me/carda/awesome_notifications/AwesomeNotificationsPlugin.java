@@ -466,6 +466,14 @@ public class AwesomeNotificationsPlugin extends BroadcastReceiver implements Flu
             case Definitions.CHANNEL_METHOD_CANCEL_ALL_NOTIFICATIONS:
                 channelMethodCancelAllNotifications(call, result);
                 return;
+
+                //Yuthanea@CodeClans
+            case Definitions.CHANNEL_METHOD_SUBSCRIBE_TO_TOPIC:
+                channelMethodSubscribeToFCMTopic(call, result);
+                return;
+            case Definitions.CHANNEL_METHOD_UNSUBSCRIBE_TO_TOPIC:
+                channelMethodUnsubscribeToFCMTopic(call, result);
+                return;
         }
 
         result.notImplemented();
@@ -685,6 +693,32 @@ public class AwesomeNotificationsPlugin extends BroadcastReceiver implements Flu
     private void channelMethodIsFcmAvailable(MethodCall call, Result result) {
         try {
             result.success(hasGooglePlayServices && firebaseEnabled && FirebaseMessaging.getInstance() != null);
+        } catch (Exception e) {
+            Log.w(TAG, "FCM could not enabled for this project.", e);
+            result.success(false );
+        }
+    }
+
+    //Yuthanea@CodeClans
+    //Subscription to FCM topic
+    private void channelMethodSubscribeToFCMTopic(MethodCall call, Result result) {
+        try {
+            String topic = call.arguments();
+            FirebaseMessaging.getInstance().subscribeToTopic(topic);
+            result.success(true);
+        } catch (Exception e) {
+            Log.w(TAG, "FCM could not enabled for this project.", e);
+            result.success(false );
+        }
+    }
+
+    //Yuthanea@CodeClans
+    //Unsubscribe to FCM topic
+    private void channelMethodUnsubscribeToFCMTopic(MethodCall call, Result result) {
+        try {
+            String topic = call.arguments();
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(topic);
+            result.success(true);
         } catch (Exception e) {
             Log.w(TAG, "FCM could not enabled for this project.", e);
             result.success(false );

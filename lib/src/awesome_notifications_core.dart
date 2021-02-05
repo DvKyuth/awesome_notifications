@@ -22,8 +22,7 @@ class AwesomeNotifications {
   /// STREAM CREATION METHODS *********************************************
 
   // Streams are created so that app can respond to notification-related events since the plugin is initialised in the `main` function
-  final StreamController<String> _tokenStreamController =
-      StreamController<String>();
+  final StreamController<String> _tokenStreamController = StreamController<String>();
 
   final StreamController<ReceivedNotification>
       // ignore: close_sinks
@@ -115,8 +114,7 @@ class AwesomeNotifications {
   @visibleForTesting
   AwesomeNotifications.private(MethodChannel channel) : _channel = channel;
 
-  static final AwesomeNotifications _instance =
-      AwesomeNotifications.private(const MethodChannel(CHANNEL_FLUTTER_PLUGIN));
+  static final AwesomeNotifications _instance = AwesomeNotifications.private(const MethodChannel(CHANNEL_FLUTTER_PLUGIN));
 
   /// INITIALIZING METHODS *********************************************
 
@@ -124,8 +122,7 @@ class AwesomeNotifications {
   /// to be called at main.dart once.
   /// OBS: [defaultIcon] needs to be a Resource media type
   /// OBS 2: [channels] are updated if they already exists
-  Future<bool> initialize(
-      String defaultIcon, List<NotificationChannel> channels) async {
+  Future<bool> initialize(String defaultIcon, List<NotificationChannel> channels) async {
     WidgetsFlutterBinding.ensureInitialized();
 
     _channel.setMethodCallHandler(_handleMethod);
@@ -142,10 +139,7 @@ class AwesomeNotifications {
       defaultIconPath = defaultIcon;
     }
 
-    var result = await _channel.invokeMethod(CHANNEL_METHOD_INITIALIZE, {
-      INITIALIZE_DEFAULT_ICON: defaultIconPath,
-      INITIALIZE_CHANNELS: serializedChannels
-    });
+    var result = await _channel.invokeMethod(CHANNEL_METHOD_INITIALIZE, {INITIALIZE_DEFAULT_ICON: defaultIconPath, INITIALIZE_CHANNELS: serializedChannels});
 
     return result;
   }
@@ -154,8 +148,7 @@ class AwesomeNotifications {
 
   /// Decode a drawable resource bytes into a Uint8List to be used in Flutter widgets
   Future<Uint8List> getDrawableData(String drawablePath) async {
-    var result2 = await _channel.invokeMethod(
-        CHANNEL_METHOD_GET_DRAWABLE_DATA, drawablePath);
+    var result2 = await _channel.invokeMethod(CHANNEL_METHOD_GET_DRAWABLE_DATA, drawablePath);
 
     if (result2 == null) return null;
 
@@ -198,8 +191,7 @@ class AwesomeNotifications {
 
   void _validateId(int id) {
     if (id > 0x7FFFFFFF || id < -0x80000000) {
-      throw ArgumentError(
-          'The id field must be the limited to 32-bit size integer');
+      throw ArgumentError('The id field must be the limited to 32-bit size integer');
     }
   }
 
@@ -207,15 +199,13 @@ class AwesomeNotifications {
 
   /// Gets the firebase cloud messaging token
   Future<String> get firebaseAppToken async {
-    final String token =
-        await _channel.invokeMethod(CHANNEL_METHOD_GET_FCM_TOKEN);
+    final String token = await _channel.invokeMethod(CHANNEL_METHOD_GET_FCM_TOKEN);
     return token;
   }
 
   /// Check if firebase is fully available on the project
   Future<bool> get isFirebaseAvailable async {
-    final bool isAvailable =
-        await _channel.invokeMethod(CHANNEL_METHOD_IS_FCM_AVAILABLE);
+    final bool isAvailable = await _channel.invokeMethod(CHANNEL_METHOD_IS_FCM_AVAILABLE);
     return isAvailable;
   }
 
@@ -232,13 +222,7 @@ class AwesomeNotifications {
     _validateId(content.id);
 
     try {
-      final bool wasCreated = await _channel.invokeMethod(
-          CHANNEL_METHOD_CREATE_NOTIFICATION,
-          PushNotification(
-                  content: content,
-                  schedule: schedule,
-                  actionButtons: actionButtons)
-              .toMap());
+      final bool wasCreated = await _channel.invokeMethod(CHANNEL_METHOD_CREATE_NOTIFICATION, PushNotification(content: content, schedule: schedule, actionButtons: actionButtons).toMap());
 
       return wasCreated;
     } on PlatformException catch (error) {
@@ -249,28 +233,24 @@ class AwesomeNotifications {
 
   /// Check if the notifications are permitted
   Future<bool> isNotificationAllowed() async {
-    final bool isAllowed =
-        await _channel.invokeMethod(CHANNEL_METHOD_IS_NOTIFICATION_ALLOWED);
+    final bool isAllowed = await _channel.invokeMethod(CHANNEL_METHOD_IS_NOTIFICATION_ALLOWED);
     return isAllowed;
   }
 
   /// Prompts the user to enabled notifications
   Future<bool> requestPermissionToSendNotifications() async {
-    final bool isAllowed =
-        await _channel.invokeMethod(CHANNEL_METHOD_REQUEST_NOTIFICATIONS);
+    final bool isAllowed = await _channel.invokeMethod(CHANNEL_METHOD_REQUEST_NOTIFICATIONS);
     return isAllowed;
   }
 
   /// List all active scheduled notifications.
   Future<List<PushNotification>> listScheduledNotifications() async {
     List<PushNotification> scheduledNotifications = [];
-    List<Object> returned =
-        await _channel.invokeListMethod(CHANNEL_METHOD_LIST_ALL_SCHEDULES);
+    List<Object> returned = await _channel.invokeListMethod(CHANNEL_METHOD_LIST_ALL_SCHEDULES);
     for (Object object in returned) {
       if (object is Map) {
         try {
-          PushNotification pushNotification =
-              PushNotification().fromMap(Map<String, dynamic>.from(object));
+          PushNotification pushNotification = PushNotification().fromMap(Map<String, dynamic>.from(object));
           scheduledNotifications.add(pushNotification);
         } catch (e) {
           return [];
@@ -282,14 +262,12 @@ class AwesomeNotifications {
 
   /// Set a new notification channel or updates if already exists
   Future<void> setChannel(NotificationChannel notificationChannel) async {
-    await _channel.invokeMethod(
-        CHANNEL_METHOD_SET_NOTIFICATION_CHANNEL, notificationChannel.toMap());
+    await _channel.invokeMethod(CHANNEL_METHOD_SET_NOTIFICATION_CHANNEL, notificationChannel.toMap());
   }
 
   /// Remove a notification channel
   Future<bool> removeChannel(String channelKey) async {
-    final bool wasRemoved = await _channel.invokeMethod(
-        CHANNEL_METHOD_REMOVE_NOTIFICATION_CHANNEL, channelKey);
+    final bool wasRemoved = await _channel.invokeMethod(CHANNEL_METHOD_REMOVE_NOTIFICATION_CHANNEL, channelKey);
     return wasRemoved;
   }
 
@@ -307,8 +285,7 @@ class AwesomeNotifications {
 
   /// Get badge counter (on iOS the amount is global)
   Future<int> getGlobalBadgeCounter() async {
-    final int badgeCount =
-        await _channel.invokeMethod(CHANNEL_METHOD_GET_BADGE_COUNT);
+    final int badgeCount = await _channel.invokeMethod(CHANNEL_METHOD_GET_BADGE_COUNT);
     return badgeCount;
   }
 
@@ -337,5 +314,17 @@ class AwesomeNotifications {
   /// Cancel all notifications and active schedules
   Future<void> cancelAll() async {
     await _channel.invokeMethod(CHANNEL_METHOD_CANCEL_ALL_NOTIFICATIONS);
+  }
+
+  //Yuthanea@CodeClans
+  ///Subscribe to fcm topic
+  Future<void> subscribeToTopic(String topic) async {
+    await _channel.invokeMethod(CHANNEL_METHOD_SUBSCRIBE_TO_TOPIC, topic);
+  }
+
+  //Yuthanea@CodeClans
+  ///Unsubscribe to fcm topic
+  Future<void> unsubscribeToTopic(String topic) async {
+    await _channel.invokeMethod(CHANNEL_METHOD_SUBSCRIBE_TO_TOPIC, topic);
   }
 }
