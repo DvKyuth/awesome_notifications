@@ -325,6 +325,6 @@ class AwesomeNotifications {
   //Yuthanea@CodeClans
   ///Unsubscribe to fcm topic
   Future<void> unsubscribeToTopic(String topic) async {
-    await _channel.invokeMethod(CHANNEL_METHOD_SUBSCRIBE_TO_TOPIC, topic);
+    await _channel.invokeMethod(CHANNEL_METHOD_UNSUBSCRIBE_TO_TOPIC, topic);
   }
 }
