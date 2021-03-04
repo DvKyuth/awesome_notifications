@@ -1,8 +1,9 @@
 import 'dart:io';
 
-import 'package:http/http.dart' show Client, Response;
-import 'package:flutter/cupertino.dart';
 import 'package:awesome_notifications_example/utils/common_functions.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' show Client, Response;
+
 import 'datasource.dart';
 
 class HttpDataSource extends DataSource {
@@ -10,8 +11,7 @@ class HttpDataSource extends DataSource {
   final bool isUsingHttps;
   final bool isCertificateHttps;
 
-  HttpDataSource(this.baseAPI,
-      {this.isUsingHttps = true, this.isCertificateHttps = true});
+  HttpDataSource(this.baseAPI, {this.isUsingHttps = true, this.isCertificateHttps = true});
 
   String getDomainName() {
     return baseAPI;
@@ -25,8 +25,7 @@ class HttpDataSource extends DataSource {
     int sent;
     int received = response.contentLength;
     debugPrint('${response.request.method} (${response.statusCode}) - ' +
-        ((sent == null ? '' : 'Up:${fileSize(sent)} ') +
-            (received == null ? '' : 'Down:${fileSize(received)} ')) +
+        ((sent == null ? '' : 'Up:${fileSize(sent)} ') + (received == null ? '' : 'Down:${fileSize(received)} ')) +
         response.request.url.path);
   }
 
@@ -46,12 +45,9 @@ class HttpDataSource extends DataSource {
         debugPrint('Requesting url "$apiUrl"...');
 
         final Client client = Client();
-        final Uri uri = isUsingHttps
-            ? Uri.https(baseAPI, directory, parameters)
-            : Uri.http(baseAPI, directory, parameters);
-        final Response response = body.isEmpty
-            ? await client.get(uri.toString(), headers: headers)
-            : await client.post(uri.toString(), headers: headers, body: body);
+        final Uri uri = isUsingHttps ? Uri.https(baseAPI, directory, parameters) : Uri.http(baseAPI, directory, parameters);
+        final Response response =
+            body.isEmpty ? await client.get(uri, headers: headers) : await client.post(uri, headers: headers, body: body);
 
         printDebugData(response);
         return response;
